@@ -2633,6 +2633,8 @@
       if (this.isArcadeMode()) {
         this.setArcadeModeContainerScale();
       }
+      this.containerEl.style.width = this.dimensions.width + "px";
+      this.containerEl.style.height = this.dimensions.height + "px";
       this.startListening();
       this.update();
       window.addEventListener(
@@ -2699,9 +2701,9 @@
           false
         );
         this.tRex.update(0);
+        this.containerEl.style.width = this.dimensions.width + "px";
+        this.containerEl.style.height = this.dimensions.height + "px";
         if (this.playing || this.crashed || this.paused) {
-          this.containerEl.style.width = this.dimensions.width + "px";
-          this.containerEl.style.height = this.dimensions.height + "px";
           this.distanceMeter.update(0, Math.ceil(this.distanceRan));
           const shouldResume = this.playing && this.activated && !this.playingIntro;
           if (this.activated && !this.playingIntro) {
@@ -2749,15 +2751,9 @@
         this.containerEl.addEventListener("animationend", startGameOnce);
         this.containerEl.style.width = this.dimensions.width + "px";
         this.containerEl.style.height = this.dimensions.height + "px";
-        if (isStageFullscreen(this.outerContainerEl)) {
-          this.containerEl.style.webkitAnimation = "";
-          this.containerEl.style.animation = "";
-          setTimeout(startGameOnce, 400);
-        } else {
-          this.containerEl.style.webkitAnimation = "intro .4s ease-out 1 both";
-          this.containerEl.style.animation = "intro .4s ease-out 1 both";
-          setTimeout(startGameOnce, 500);
-        }
+        this.containerEl.style.webkitAnimation = "";
+        this.containerEl.style.animation = "";
+        setTimeout(startGameOnce, 400);
         this.setPlayStatus(true);
         this.activated = true;
       } else if (this.crashed) {
@@ -2951,6 +2947,16 @@
         }
       }
       if (this.playing || !this.activated && this.tRex.blinkCount < this.config.maxBlinkCount) {
+        if (!this.playing && this.horizon) {
+          this.clearCanvas();
+          this.horizon.update(
+            0,
+            0,
+            false,
+            /* showNightMode = */
+            false
+          );
+        }
         this.tRex.update(deltaTime);
         this.scheduleNextUpdate();
       }
@@ -3101,7 +3107,8 @@
           const isMobileMouseClick = isMobileMousePointerDown && !isMobileMouseInput && e.button === 0 && (e.target === this.canvas || e.target === this.touchController);
           assert(this.tRex);
           const isStageTouch = e instanceof PointerEvent && e.type === "pointerdown" /* POINTERDOWN */ && e.pointerType !== "mouse" && this.outerContainerEl.contains(e.target) && !isInteractiveTarget(e) || e.type === "touchstart" /* TOUCHSTART */ && this.outerContainerEl.contains(e.target) && !isInteractiveTarget(e);
-          if (e instanceof KeyboardEvent && runnerKeycodes.jump.includes(e.keyCode) || e.type === "touchstart" /* TOUCHSTART */ || isMobileMouseInput || isMobileMouseClick || isStageTouch) {
+          const isDesktopMouseClick = !IS_MOBILE && e instanceof PointerEvent && e.type === "pointerdown" /* POINTERDOWN */ && e.pointerType === "mouse" && e.button === 0 && this.outerContainerEl.contains(e.target) && !isInteractiveTarget(e);
+          if (e instanceof KeyboardEvent && runnerKeycodes.jump.includes(e.keyCode) || e.type === "touchstart" /* TOUCHSTART */ || isMobileMouseInput || isMobileMouseClick || isStageTouch || isDesktopMouseClick) {
             e.preventDefault();
             if (!this.playing) {
               if (!this.touchController && e.type === "touchstart" /* TOUCHSTART */) {

@@ -209,7 +209,7 @@ a:hover {
   position: absolute;
   top: 0;
   left: 0;
-  width: 44px;
+  width: 600px;
   transform-origin: top left;
   image-rendering: pixelated;
   z-index: 2;
@@ -387,7 +387,8 @@ a:hover {
   font-size: 0.9rem;
 }
 
-/* Fixed-size reserved ad slot — visually empty, no layout shift. */
+/* When an ad is approved, drop .ad-slot--empty so the reserved 90px slot
+   appears from the first paint (no late JS show, no CLS). */
 .ad-slot {
   width: 100%;
   max-width: 728px;
@@ -399,6 +400,16 @@ a:hover {
   overflow: hidden;
 }
 
+.ad-slot--empty {
+  display: none;
+  height: 0;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+}
+
 .ad-slot .ad-slot-label {
   position: absolute;
   width: 1px;
@@ -408,9 +419,16 @@ a:hover {
 }
 
 .article {
-  max-width: var(--max);
+  max-width: var(--stage-max);
   margin: 0 auto;
   padding: 4.5rem 1.25rem 3rem;
+}
+
+.article h2,
+.article h3,
+.article p,
+.article ul {
+  max-width: var(--max);
 }
 
 .article h2 {

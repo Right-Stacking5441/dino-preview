@@ -1,0 +1,27 @@
+{
+  "name": "dino.game",
+  "short_name": "dino.game",
+  "description": "The unofficial T-Rex runner, playable in a browser.",
+  "start_url": "/dino-preview/",
+  "scope": "/dino-preview/",
+  "display": "fullscreen",
+  "background_color": "#fafaf8",
+  "theme_color": "#fafaf8",
+  "icons": [
+    {
+      "src": "/dino-preview/assets/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/dino-preview/assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/dino-preview/assets/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}
