@@ -160,7 +160,9 @@
     if (event) {
       event.preventDefault();
     }
-    clearStoredChoice();
+    // Persist denial so a withdrawal is not forgotten on reload.
+    // Cookie settings still re-opens the banner so the choice can be changed.
+    store('denied');
     applyConsent('denied');
     clearGaCookies();
     showBanner();
