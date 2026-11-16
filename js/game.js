@@ -2090,6 +2090,8 @@
           this.animStartTime = time;
           this.blinkCount++;
         }
+      } else {
+        this.draw(this.currentAnimFrames[0], 0);
       }
     }
     /**
@@ -3924,6 +3926,21 @@
       }, 50);
     });
   }
+  function setStageHint(state) {
+    const hint = document.getElementById("stage-hint");
+    if (!hint) {
+      return;
+    }
+    hint.dataset.state = state;
+    if (state === "running") {
+      hint.hidden = true;
+    } else {
+      hint.hidden = false;
+    }
+  }
+  function bindStageHint() {
+    setStageHint("start");
+  }
   function boot() {
     document.addEventListener("keydown", preventPageScrollOnGameKeys);
     window.addEventListener("dino-ready", () => {
@@ -3931,11 +3948,14 @@
       window.__DINO_RUNNER = runner;
       restoreHighScore();
       bindToolbar(runner);
+      bindStageHint();
     });
     window.addEventListener("dino-game-start", () => {
+      setStageHint("running");
       track("game_start");
     });
     window.addEventListener("dino-game-over", (event) => {
+      setStageHint("restart");
       const detail = event.detail;
       const score = detail?.score ?? 0;
       const high = detail?.highScore ?? 0;
@@ -3950,3 +3970,4 @@
     boot();
   }
 })();
+//# sourceMappingURL=game.js.map
