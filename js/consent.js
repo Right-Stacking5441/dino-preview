@@ -132,7 +132,7 @@
       el.setAttribute('role', 'dialog');
       el.setAttribute('aria-label', 'Analytics cookies');
       el.innerHTML =
-        '<p>This site uses Google Analytics only if you accept. No analytics cookies are set until you choose. See the <a href="/dino-preview/privacy/">privacy page</a>.</p>' +
+        '<p>This site uses Google Analytics only if you accept. No analytics cookies are set until you choose. See the <a href="/dino-preview/privacy/">privacy page</a>, or <a href="#cookie-settings">Cookie settings</a>.</p>' +
         '<div class="consent-actions">' +
         '<button type="button" id="consent-accept">Accept</button>' +
         '<button type="button" id="consent-reject">Reject</button>' +

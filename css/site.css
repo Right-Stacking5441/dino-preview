@@ -1,5 +1,9 @@
-/* dino.game site chrome. Game sprites, canvas and runner classes
-   follow Chromium neterror.css behaviour, scoped to the stage. */
+/*!
+ * dino.game site chrome. Game runner layout follows Chromium neterror.css
+ * behaviour, scoped to the stage.
+ * Game code and sprites © The Chromium Authors.
+ * Redistribution under the BSD 3-Clause licence. See /license/ and LICENSE.
+ */
 
 :root {
   --page-bg: #fafaf8;
@@ -497,6 +501,30 @@ a:hover {
   padding: 1rem;
 }
 
+.legal-page h2 {
+  margin: 1.75rem 0 0.6rem;
+  font-size: 1.15rem;
+}
+
+.legal-page table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.75rem 0 1rem;
+  font-size: 0.95rem;
+}
+
+.legal-page th,
+.legal-page td {
+  text-align: left;
+  vertical-align: top;
+  padding: 0.4rem 0.75rem 0.4rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.legal-page th {
+  font-weight: 600;
+}
+
 @media (max-width: 640px) {
   body {
     font-size: 16px;
@@ -631,12 +659,6 @@ a:hover {
   line-height: 1;
   padding: 0.45rem 0.8rem;
   min-height: 36px;
-}
-
-#consent-accept {
-  background: #1b1b19;
-  color: #fff;
-  border-color: #1b1b19;
 }
 
 /* Preview-only strip. Remove at launch with the noindex tags. */
