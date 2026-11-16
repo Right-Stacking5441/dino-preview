@@ -143,6 +143,7 @@
       el.id = 'consent-banner';
       el.setAttribute('role', 'dialog');
       el.setAttribute('aria-label', 'Analytics cookies');
+      el.setAttribute('tabindex', '-1');
       el.innerHTML =
         '<p>This site uses Google Analytics only if you accept. No analytics cookies are set until you choose. See the <a href="/dino-preview/privacy/">privacy page</a>, or <a href="#cookie-settings">Cookie settings</a>.</p>' +
         '<div class="consent-actions">' +
@@ -166,13 +167,54 @@
     applyConsent('denied');
     clearGaCookies();
     showBanner();
-    var accept = document.getElementById('consent-accept');
-    if (accept) {
-      accept.focus();
+    var banner = document.getElementById('consent-banner');
+    if (banner) {
+      if (!banner.hasAttribute('tabindex')) {
+        banner.setAttribute('tabindex', '-1');
+      }
+      try {
+        banner.focus({preventScroll: true});
+      } catch (err) {
+        banner.focus();
+      }
     }
   }
 
   window.dinoOpenCookieSettings = openCookieSettings;
+
+  function isConsentChoiceButton(el) {
+    return !!el && (el.id === 'consent-accept' || el.id === 'consent-reject');
+  }
+
+  function isGameKey(e) {
+    return e.code === 'Space' || e.code === 'ArrowUp' || e.code === 'ArrowDown' ||
+        e.code === 'Enter' || e.key === ' ' || e.key === 'ArrowUp' ||
+        e.key === 'ArrowDown' || e.key === 'Enter' || e.key === 'Up' ||
+        e.key === 'Down';
+  }
+
+  // While the banner itself is focused, Space/Up must not start the game
+  // or activate Accept/Reject. Those buttons only respond to Space/Enter
+  // after the user has Tabbed to them.
+  document.addEventListener('keydown', function (e) {
+    var banner = document.getElementById('consent-banner');
+    if (!banner || banner.hidden) {
+      return;
+    }
+    var active = document.activeElement;
+    if (!active || !banner.contains(active)) {
+      return;
+    }
+    if (!isGameKey(e)) {
+      return;
+    }
+    if (isConsentChoiceButton(active) &&
+        (e.code === 'Space' || e.key === ' ' || e.code === 'Enter' || e.key === 'Enter')) {
+      return;
+    }
+    e.preventDefault();
+    e.stopPropagation();
+  }, true);
 
   document.addEventListener('click', function (event) {
     var link = event.target && event.target.closest &&

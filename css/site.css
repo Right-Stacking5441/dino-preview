@@ -166,8 +166,15 @@ a:hover {
   display: none;
 }
 .stage-hint[data-state="start"] .hint-start,
-.stage-hint[data-state="restart"] .hint-restart {
+.stage-hint[data-state="restart"] .hint-restart,
+.stage-hint[data-state="restart-pending"] .hint-restart {
   display: inline;
+}
+/* Space is ignored for 1.2s after a crash; don't show the keyboard
+   restart hint until it works. Tap/click already work, so the touch
+   hint is visible in restart-pending. */
+.stage-hint[data-state="restart-pending"] .hint-keyboard {
+  display: none !important;
 }
 .stage-hint .hint-keyboard {
   display: none;
@@ -709,6 +716,12 @@ a:hover {
 
 #consent-banner[hidden] {
   display: none !important;
+}
+
+/* Programmatic focus after Cookie settings (not :focus-visible). */
+#consent-banner:focus {
+  outline: 2px solid #1b1b19;
+  outline-offset: -2px;
 }
 
 #consent-banner p {
