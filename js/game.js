@@ -3728,6 +3728,13 @@
   var HIGH_SCORE_KEY = "dino.game.highScore";
   var MUTE_KEY = "dino.game.muted";
   function track(event, params) {
+    try {
+      if (window.localStorage.getItem("dino.game.analyticsConsent") !== "granted") {
+        return;
+      }
+    } catch {
+      return;
+    }
     if (typeof window.gtag === "function") {
       window.gtag("event", event, params || {});
     }

@@ -32,10 +32,22 @@
 
   function applyConsent(choice) {
     if (choice === 'granted') {
-      window.gtag('consent', 'update', { analytics_storage: 'granted' });
+      window['ga-disable-' + GA_ID] = false;
+      window.gtag('consent', 'update', {
+        analytics_storage: 'granted',
+        ad_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied'
+      });
       loadGa();
     } else {
-      window.gtag('consent', 'update', { analytics_storage: 'denied' });
+      window.gtag('consent', 'update', {
+        analytics_storage: 'denied',
+        ad_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied'
+      });
+      window['ga-disable-' + GA_ID] = true;
     }
   }
 
