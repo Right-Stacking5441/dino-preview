@@ -138,6 +138,54 @@ a:hover {
 .toolbar-actions {
   display: flex;
   gap: 0.4rem;
+  margin-inline-start: auto;
+}
+
+/* Device-specific start/restart cue, overlaid on the stage so it does not shift layout. */
+.stage-hint {
+  position: absolute;
+  left: 50%;
+  top: 38%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  margin: 0;
+  padding: 0 0.5rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.3;
+  text-align: center;
+  pointer-events: none;
+  white-space: nowrap;
+}
+.stage-hint[hidden],
+.stage-hint[data-state="running"] {
+  display: none !important;
+}
+.stage-hint .hint-start,
+.stage-hint .hint-restart {
+  display: none;
+}
+.stage-hint[data-state="start"] .hint-start,
+.stage-hint[data-state="restart"] .hint-restart {
+  display: inline;
+}
+.stage-hint .hint-keyboard {
+  display: none;
+}
+.stage-hint .hint-touch {
+  display: inline;
+}
+@media (hover: hover) and (pointer: fine) {
+  .stage-hint .hint-keyboard {
+    display: inline;
+  }
+  .stage-hint .hint-touch {
+    display: none;
+  }
+}
+#game-stage:fullscreen .stage-hint,
+#game-stage:-webkit-full-screen .stage-hint {
+  font-size: 1.05rem;
 }
 
 .toolbar button {
@@ -499,9 +547,18 @@ a:hover {
 }
 
 .legal-page {
-  max-width: var(--max);
+  max-width: var(--stage-max);
   margin: 0 auto;
   padding: 2rem 1.25rem 3rem;
+}
+
+.legal-page h1,
+.legal-page h2,
+.legal-page p,
+.legal-page ul,
+.legal-page pre,
+.legal-page table {
+  max-width: var(--max);
 }
 
 .legal-page h1 {
