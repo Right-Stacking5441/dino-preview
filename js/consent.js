@@ -27,7 +27,10 @@
     s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
     document.head.appendChild(s);
     window.gtag('js', new Date());
-    window.gtag('config', GA_ID);
+    window.gtag('config', GA_ID, {
+      allow_google_signals: false,
+      allow_ad_personalization_signals: false
+    });
   }
 
   function applyConsent(choice) {
