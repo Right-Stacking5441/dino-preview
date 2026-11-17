@@ -37,6 +37,14 @@ body {
   line-height: 1.55;
 }
 
+body {
+  overflow-wrap: break-word;
+}
+
+[hidden] {
+  display: none !important;
+}
+
 img,
 canvas {
   max-width: 100%;
@@ -67,6 +75,7 @@ a:hover {
 
 .site-header {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
@@ -86,6 +95,7 @@ a:hover {
 
 .site-header nav {
   display: flex;
+  flex-wrap: wrap;
   gap: 1rem;
   font-size: 0.9rem;
 }
@@ -158,7 +168,9 @@ a:hover {
   white-space: nowrap;
 }
 .stage-hint[hidden],
-.stage-hint[data-state="running"] {
+.stage-hint[data-state="running"],
+.stage-hint[data-state="restart"],
+.stage-hint[data-state="restart-pending"] {
   display: none !important;
 }
 .stage-hint .hint-start,
@@ -227,6 +239,10 @@ a:hover {
   background: var(--game-bg);
   overflow: hidden;
   image-rendering: pixelated;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-touch-callout: none;
 }
 
 @media (min-width: 600px) {
@@ -595,12 +611,17 @@ a:hover {
   font-size: 0.95rem;
 }
 
+.legal-page code {
+  overflow-wrap: anywhere;
+}
+
 .legal-page th,
 .legal-page td {
   text-align: left;
   vertical-align: top;
   padding: 0.4rem 0.75rem 0.4rem 0;
   border-bottom: 1px solid var(--line);
+  overflow-wrap: anywhere;
 }
 
 .legal-page th {
@@ -674,22 +695,6 @@ a:hover {
     overflow: hidden;
   }
 
-  #consent-banner {
-    padding: 0.35rem 1rem;
-    font-size: 0.8rem;
-    gap: 0.35rem 0.75rem;
-  }
-
-  #consent-banner p {
-    flex: 1 1 auto;
-    max-width: none;
-  }
-
-  #consent-banner button {
-    min-height: 32px;
-    padding: 0.3rem 0.65rem;
-  }
-
   .article {
     padding-top: 2rem;
   }
@@ -745,8 +750,32 @@ a:hover {
   font: inherit;
   font-size: 0.85rem;
   line-height: 1;
-  padding: 0.45rem 0.8rem;
-  min-height: 36px;
+  padding: 0.5rem 1rem;
+  min-height: 44px;
+  min-width: 44px;
+}
+
+
+@media (orientation: landscape) and (max-height: 500px) {
+  /* After the base #consent-banner rules so top/bottom/padding actually apply. */
+  #consent-banner {
+    top: 0;
+    bottom: auto;
+    border-top: 0;
+    border-bottom: 1px solid var(--line);
+    padding: calc(0.35rem + env(safe-area-inset-top, 0px)) 1rem 0.35rem;
+    font-size: 0.8rem;
+    gap: 0.35rem 0.75rem;
+  }
+
+  #consent-banner p {
+    flex: 1 1 auto;
+    max-width: none;
+  }
+
+  #consent-banner button {
+    min-height: 44px;
+  }
 }
 
 /* Preview-only strip. Remove at launch with the noindex tags. */

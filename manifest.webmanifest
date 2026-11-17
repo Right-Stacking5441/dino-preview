@@ -1,7 +1,7 @@
 {
   "name": "dino.game",
   "short_name": "dino.game",
-  "description": "The unofficial T-Rex runner, playable in a browser.",
+  "description": "The T-Rex runner from Chrome\u2019s offline page, in any browser.",
   "start_url": "/dino-preview/",
   "scope": "/dino-preview/",
   "display": "fullscreen",
